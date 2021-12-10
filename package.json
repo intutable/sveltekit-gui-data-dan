@@ -1,0 +1,29 @@
+{
+    "name": "@intutable/data-dan-gui",
+    "version": "0.1.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "npm run build:plugin && npm run build:gui",
+        "build:plugin": "tsc",
+        "build:gui": "cd src/gui && svelte-kit package",
+        "test": "npm run build && npx jest"
+    },
+    "keywords": [],
+    "author": "Parallel and Distributed Systems Group Universität Heidelberg",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@intutable/core": "^0.1.4",
+        "@sveltejs/kit": "next",
+        "node-sass": "^7.0.0",
+        "svelte-preprocess": "^4.9.8",
+        "svelte2tsx": "^0.4.11"
+    },
+    "devDependencies": {
+        "@testing-library/svelte": "^3.0.3",
+        "@types/jest": "^27.0.3",
+        "jest": "^27.4.4",
+        "ts-jest": "^27.1.1",
+        "typescript": "^4.5.3"
+    }
+}
