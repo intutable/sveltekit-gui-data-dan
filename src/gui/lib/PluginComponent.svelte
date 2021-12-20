@@ -1,10 +1,12 @@
 <script lang="ts">
+    import RunBar from "./runBar/RunBar.svelte"
     import CodeEditor from "./editor/CodeEditor.svelte"
 
     let codeSnippet: string
 </script>
 
 <div class="main-container">
+    <RunBar codeSnippet={codeSnippet}/>
     <CodeEditor bind:codeSnippet={codeSnippet}/>
 </div>
 
