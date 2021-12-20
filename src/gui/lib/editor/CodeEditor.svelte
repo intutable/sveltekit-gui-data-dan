@@ -4,14 +4,10 @@
     import TsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
     import { onMount } from "svelte"
 
-    export let codeSnippet: string
+    export let codeSnippet: string = ["function x() {", "\tconsole.log(\"Hello world!\");", "}"].join("\n")
 
     let divElement: HTMLDivElement | undefined = undefined
     let editor: Monaco.editor.IStandaloneCodeEditor
-
-    $: {
-        codeSnippet = editor?.getValue() ?? ""
-    }
 
     onMount(async () => {
         // @ts-ignore
@@ -22,7 +18,7 @@
         }
 
         editor = Monaco.editor.create(divElement, {
-            value: ["function x() {", "\tconsole.log(\"Hello world!\");", "}"].join("\n"),
+            value: codeSnippet,
             language: "javascript",
             theme: "vs-dark",
             minimap: {
@@ -34,6 +30,10 @@
             },
             scrollBeyondLastLine: false,
         })
+
+        editor.getModel().onDidChangeContent(() => {
+            codeSnippet = editor.getValue()
+        });
 
         return () => { editor.dispose() }
     })
