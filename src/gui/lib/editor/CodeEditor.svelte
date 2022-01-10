@@ -21,6 +21,7 @@
             value: codeSnippet,
             language: "javascript",
             theme: "vs-dark",
+            automaticLayout: true,
             minimap: {
                 enabled: false
             },
@@ -45,6 +46,7 @@
 
 <style lang="sass">
   .editor
+    flex: 1
     border: 2px solid #1e1e1e
     border-radius: 6px
     padding: 0.5rem
