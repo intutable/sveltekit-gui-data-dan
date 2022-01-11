@@ -34,7 +34,7 @@
 
         editor.getModel().onDidChangeContent(() => {
             codeSnippet = editor.getValue()
-        });
+        })
 
         return () => { editor.dispose() }
     })
