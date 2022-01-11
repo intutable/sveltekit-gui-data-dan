@@ -1,10 +1,13 @@
 import { PluginLoader } from "@intutable/core"
+import { RegisterUiRequest } from "./types"
 
 export async function init(plugins: PluginLoader) {
-    await plugins.request({
+    const request: RegisterUiRequest = {
         channel: "gui-es",
         method: "registerUi",
         plugin: "data-dan-gui",
-        components: ["PluginComponent"],
-    })
+        components: [{ name: "PluginComponent", title: "DataDan" }]
+    }
+
+    await plugins.request(request)
 }
