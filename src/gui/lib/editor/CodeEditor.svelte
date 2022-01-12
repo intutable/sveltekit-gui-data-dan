@@ -40,20 +40,12 @@
     })
 </script>
 
-<div class="editor">
-    <div class="monaco-editor" bind:this={divElement}></div>
-</div>
+<div class="monaco-editor" bind:this={divElement}></div>
 
 <style lang="sass">
-  .editor
-    flex: 1
-    border: 2px solid #1e1e1e
-    border-radius: 6px
-    padding: 0.5rem
-    background: #1e1e1e
-    height: 14rem
-
   .monaco-editor
     height: 100%
-    overflow: hidden
+    border-radius: 6px
+    padding-top: 0.5rem
+    overflow-x: hidden
 </style>
