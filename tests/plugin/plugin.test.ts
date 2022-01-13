@@ -34,7 +34,15 @@ describe("plugin registration", () => {
         events.listenForRequests("gui-es", "registerUi", requestHandler)
         await createCore()
 
-        expect(requestObject?.components).toEqual([{ name: "PluginComponent", title: "DataDan" }])
+        expect(requestObject?.components).toEqual(
+            [
+                {
+                    name: "PluginComponent",
+                    title: "DataDan",
+                    dimensions: { minHeight: 10, minWidth: 20 },
+                }
+            ]
+        )
     })
 })
 

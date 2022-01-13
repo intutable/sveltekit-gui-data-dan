@@ -1,6 +1,6 @@
 {
     "name": "@intutable/data-dan-gui",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "",
     "main": "dist/index.js",
     "scripts": {
@@ -16,15 +16,15 @@
         "@intutable/core": "^0.1.4",
         "@sveltejs/kit": "next",
         "monaco-editor": "^0.31.1",
-        "sass": "^1.43.4",
-        "svelte-preprocess": "^4.9.8",
-        "svelte2tsx": "^0.4.11"
+        "sass": "^1.47.0",
+        "svelte-preprocess": "^4.10.1",
+        "svelte2tsx": "^0.4.13"
     },
     "devDependencies": {
         "@testing-library/svelte": "^3.0.3",
-        "@types/jest": "^27.0.3",
-        "jest": "^27.4.4",
-        "ts-jest": "^27.1.1",
-        "typescript": "^4.5.3"
+        "@types/jest": "^27.4.0",
+        "jest": "^27.4.7",
+        "ts-jest": "^27.1.2",
+        "typescript": "^4.5.4"
     }
 }
