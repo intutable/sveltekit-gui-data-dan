@@ -1,12 +1,38 @@
 <script lang="ts">
+    import { getContext, onMount } from "svelte"
+    import type { RequestContext, StoreContext } from "../types"
+    import { executeCodeSnippet, loadTable } from "./fetch"
+
     export let codeSnippet: string
+
+    const requestContext = getContext<RequestContext>("request")
+    const storeContext = getContext<StoreContext>("store")
+    const TABLE_NAME = "p1_newTableName"
+
+    onMount(async () => {
+        console.log(`Load table '${TABLE_NAME}'`)
+
+        try {
+            await loadTable(TABLE_NAME, requestContext)
+            console.log(`Table '${TABLE_NAME}' loaded successfully!`)
+        } catch (error) {
+            console.log(error)
+        }
+    })
 
     function onOutput(): void {
         console.log("Show output")
     }
 
-    function onRun(): void {
-        console.log(`Run code snippet: ${codeSnippet}`)
+    async function onRun(): Promise<void> {
+        console.log(`Execute code snippet '${codeSnippet}'`)
+
+        try {
+            const output = await executeCodeSnippet(codeSnippet, requestContext)
+            await storeContext.updateRows(TABLE_NAME, output.data)
+        } catch (error) {
+            console.log(error)
+        }
     }
 </script>
 
