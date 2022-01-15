@@ -1,6 +1,7 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte"
     import CodeEditor from "./editor/CodeEditor.svelte"
+    import LoadingIndicator from "./loadingIndicator/LoadingIndicator.svelte"
     import OutputPanel from "./output/OutputPanel.svelte"
     import { Output, OutputType } from "./output/types"
     import { executeCodeSnippet, loadTable } from "./runBar/fetch"
@@ -13,7 +14,8 @@
 
     let codeSnippet: string
     let output: Output | undefined
-    let showOutput: boolean
+    let showLoadingIndicator = false
+    let showOutput = false
 
     onMount(async () => {
         console.log(`Load table '${TABLE_NAME}'`)
@@ -28,6 +30,7 @@
 
     async function onRun(): Promise<void> {
         console.log(`Execute code snippet '${codeSnippet}'`)
+        showLoadingIndicator = true
 
         try {
             const response = await executeCodeSnippet(codeSnippet, requestContext)
@@ -41,13 +44,16 @@
             output = new Output(OutputType.Error, message)
         }
 
+        showLoadingIndicator = false
         showOutput = true
     }
 </script>
 
 <div class="main-container">
     <RunBar bind:showOutput={showOutput} on:run={onRun}/>
-    {#if showOutput}
+    {#if showLoadingIndicator}
+        <LoadingIndicator />
+    {:else if showOutput}
         <OutputPanel {output}/>
     {:else}
         <CodeEditor bind:codeSnippet={codeSnippet}/>

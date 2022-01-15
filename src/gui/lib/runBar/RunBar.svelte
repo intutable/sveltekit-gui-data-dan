@@ -1,7 +1,7 @@
 <script lang="ts">
     import { createEventDispatcher } from "svelte"
 
-    export let showOutput = false
+    export let showOutput: boolean
 
     $: outputButtonText = showOutput ? "Edit Code" : "Show Output"
 
