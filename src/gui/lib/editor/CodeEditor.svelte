@@ -4,7 +4,7 @@
     import TsWorker from "monaco-editor/esm/vs/language/typescript/ts.worker?worker"
     import { onMount } from "svelte"
 
-    export let codeSnippet: string = ["function x() {", "\tconsole.log(\"Hello world!\");", "}"].join("\n")
+    export let codeSnippet = ""
 
     let divElement: HTMLDivElement | undefined = undefined
     let editor: Monaco.editor.IStandaloneCodeEditor
@@ -46,6 +46,6 @@
   .monaco-editor
     height: 100%
     border-radius: 6px
-    padding-top: 0.5rem
+    padding: 0.5rem 0 0.5rem 0
     overflow-x: hidden
 </style>
