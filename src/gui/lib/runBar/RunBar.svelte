@@ -45,7 +45,7 @@
       size: 0.9rem
       weight: 500
     padding: 0.4rem 0.8rem 0.4rem 0.8rem
-    margin-bottom: 0.5rem
+    margin: 0 0 0.5rem 0
     border-radius: 6px
     border: none
 
