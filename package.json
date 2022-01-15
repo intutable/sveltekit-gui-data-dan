@@ -1,6 +1,6 @@
 {
     "name": "@intutable/data-dan-gui",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "description": "",
     "main": "dist/index.js",
     "scripts": {
@@ -13,18 +13,18 @@
     "author": "Parallel and Distributed Systems Group Universität Heidelberg",
     "license": "Apache-2.0",
     "dependencies": {
-        "@intutable/core": "^0.1.4",
+        "@intutable/core": "^0.1.6",
         "@sveltejs/kit": "next",
         "monaco-editor": "^0.31.1",
-        "sass": "^1.47.0",
+        "sass": "^1.48.0",
         "svelte-preprocess": "^4.10.1",
-        "svelte2tsx": "^0.4.13"
+        "svelte2tsx": "^0.4.14"
     },
     "devDependencies": {
         "@testing-library/svelte": "^3.0.3",
         "@types/jest": "^27.4.0",
         "jest": "^27.4.7",
-        "ts-jest": "^27.1.2",
+        "ts-jest": "^27.1.3",
         "typescript": "^4.5.4"
     }
 }
