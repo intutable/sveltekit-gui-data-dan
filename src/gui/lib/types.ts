@@ -21,3 +21,10 @@ export interface ExecuteCodeResponse extends CoreResponse {
     output: string
     data: object[]
 }
+
+export class RequestError extends Error {
+    constructor(public message: string, public body: object) {
+        super(message)
+        this.name = "RequestError"
+    }
+}
