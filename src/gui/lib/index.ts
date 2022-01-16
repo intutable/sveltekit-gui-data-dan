@@ -1,3 +1,3 @@
-import PluginComponent from "./PluginComponent.svelte"
+import PluginComponent from "./component/PluginComponent.svelte"
 
 export { PluginComponent }

@@ -12,7 +12,7 @@ export async function init(plugins: PluginLoader) {
                 title: "DataDan" ,
                 dimensions: { minWidth: 20, minHeight: 10 }
             }
-        ],
+        ]
     }
 
     await plugins.request(request)

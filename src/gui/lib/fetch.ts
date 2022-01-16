@@ -1,6 +1,6 @@
 import type { CoreRequest, CoreResponse } from "@intutable/core"
-import type { ExecuteCodeRequest, LoadTableRequest, RequestContext } from "../types"
-import type { ExecuteCodeResponse } from "../types"
+import type { ExecuteCodeRequest, LoadTableRequest, RequestContext } from "./types"
+import type { ExecuteCodeResponse } from "./types"
 
 export async function loadTable(tableName: string, context: RequestContext): Promise<CoreResponse> {
     const coreRequest: CoreRequest = {

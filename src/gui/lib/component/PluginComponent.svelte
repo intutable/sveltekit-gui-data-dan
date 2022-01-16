@@ -4,9 +4,9 @@
     import LoadingIndicator from "./loadingIndicator/LoadingIndicator.svelte"
     import OutputPanel from "./output/OutputPanel.svelte"
     import { Output, OutputType } from "./output/types"
-    import { executeCodeSnippet, loadTable } from "./runBar/fetch"
+    import { executeCodeSnippet, loadTable } from "../fetch"
     import RunBar from "./runBar/RunBar.svelte"
-    import { RequestContext, RequestError, StoreContext } from "./types"
+    import { RequestContext, RequestError, StoreContext } from "../types"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
@@ -61,7 +61,7 @@
 </div>
 
 <style lang="sass">
-  @use "../style/theme"
+  @use "../../style/theme"
 
   .main-container
     @extend .theme-plain

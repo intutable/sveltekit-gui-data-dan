@@ -1,4 +1,8 @@
-import { CoreRequest, CoreResponse } from "@intutable/core"
+import { CoreRequest } from "@intutable/core"
+
+export interface PluginUI {
+    components?: Component[]
+}
 
 export interface Component {
     name: string
@@ -11,7 +15,6 @@ export interface Dimensions {
     minHeight?: number
 }
 
-export interface RegisterUiRequest extends CoreRequest {
+export interface RegisterUiRequest extends CoreRequest, PluginUI {
     plugin: string
-    components: Component[]
 }

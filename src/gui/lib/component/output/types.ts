@@ -3,6 +3,6 @@ export class Output {
 }
 
 export enum OutputType {
-    Info,
-    Error
+    Info = "Info",
+    Error = "Error"
 }
