@@ -2,6 +2,7 @@ import { CoreRequest } from "@intutable/core"
 
 export interface PluginUI {
     components?: Component[]
+    menuItems?: MenuItem[]
 }
 
 export interface Component {
@@ -13,6 +14,11 @@ export interface Component {
 export interface Dimensions {
     minWidth?: number,
     minHeight?: number
+}
+
+export interface MenuItem {
+    name: string
+    menu: string
 }
 
 export interface RegisterUiRequest extends CoreRequest, PluginUI {

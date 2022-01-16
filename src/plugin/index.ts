@@ -12,6 +12,12 @@ export async function init(plugins: PluginLoader) {
                 title: "DataDan" ,
                 dimensions: { minWidth: 20, minHeight: 10 }
             }
+        ],
+        menuItems: [
+            {
+                name: "SortColumn",
+                menu: "column"
+            }
         ]
     }
 
