@@ -8,10 +8,6 @@ export interface StoreContext {
     updateRows: (tableName: string, rows: object[]) => CoreResponse
 }
 
-export interface LoadTableRequest {
-    table: string
-}
-
 export interface ExecuteCodeRequest {
     code: string
 }
