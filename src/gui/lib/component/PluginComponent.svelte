@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte"
+    import { getContext } from "svelte"
     import CodeEditor from "./editor/CodeEditor.svelte"
     import LoadingIndicator from "./loadingIndicator/LoadingIndicator.svelte"
     import OutputPanel from "./output/OutputPanel.svelte"
