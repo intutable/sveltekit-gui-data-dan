@@ -1,21 +1,26 @@
 <script lang="ts">
-    import { getContext } from "svelte"
+    import { getContext, onMount, SvelteComponent } from "svelte"
+    import { executeCodeSnippet } from "../fetch"
+    import { CommonUiContext, RequestContext, RequestError, StoreContext } from "../types"
     import CodeEditor from "./editor/CodeEditor.svelte"
-    import LoadingIndicator from "./loadingIndicator/LoadingIndicator.svelte"
     import OutputPanel from "./output/OutputPanel.svelte"
     import { Output, OutputType } from "./output/types"
-    import { executeCodeSnippet } from "../fetch"
     import RunBar from "./runBar/RunBar.svelte"
-    import { RequestContext, RequestError, StoreContext } from "../types"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
+    const commonUiContext = getContext<CommonUiContext>("commonUi")
     const TABLE_NAME = "p1_newTableName"
 
     let codeSnippet: string
     let output: Output | undefined
+    let loadingIndicator: SvelteComponent
     let showLoadingIndicator = false
     let showOutput = false
+
+    onMount(async () => {
+        loadingIndicator = commonUiContext.getLoadingIndicator()
+    })
 
     async function onRun(): Promise<void> {
         console.log(`Execute code snippet '${codeSnippet}'`)
@@ -29,7 +34,7 @@
 
             await storeContext.updateRows(TABLE_NAME, response.data)
         } catch (error: RequestError) {
-            const  message = await error.body.error
+            const message = await error.body.error
             output = new Output(OutputType.Error, message)
         }
 
@@ -39,13 +44,13 @@
 </script>
 
 <div class="main-container">
-    <RunBar bind:showOutput={showOutput} on:run={onRun}/>
+    <RunBar bind:showOutput={showOutput} on:run={onRun} />
     {#if showLoadingIndicator}
-        <LoadingIndicator />
+        <svelte:component this={loadingIndicator} title="Executing Code" />
     {:else if showOutput}
-        <OutputPanel {output}/>
+        <OutputPanel {output} />
     {:else}
-        <CodeEditor bind:codeSnippet={codeSnippet}/>
+        <CodeEditor bind:codeSnippet={codeSnippet} />
     {/if}
 </div>
 
