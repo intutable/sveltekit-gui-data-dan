@@ -4,7 +4,7 @@
     import LoadingIndicator from "./loadingIndicator/LoadingIndicator.svelte"
     import OutputPanel from "./output/OutputPanel.svelte"
     import { Output, OutputType } from "./output/types"
-    import { executeCodeSnippet, loadTable } from "../fetch"
+    import { executeCodeSnippet } from "../fetch"
     import RunBar from "./runBar/RunBar.svelte"
     import { RequestContext, RequestError, StoreContext } from "../types"
 
@@ -16,17 +16,6 @@
     let output: Output | undefined
     let showLoadingIndicator = false
     let showOutput = false
-
-    onMount(async () => {
-        console.log(`Load table '${TABLE_NAME}'`)
-
-        try {
-            await loadTable(TABLE_NAME, requestContext)
-            console.log(`Table '${TABLE_NAME}' loaded successfully`)
-        } catch (error) {
-            console.log(error)
-        }
-    })
 
     async function onRun(): Promise<void> {
         console.log(`Execute code snippet '${codeSnippet}'`)

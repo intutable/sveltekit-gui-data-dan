@@ -1,19 +1,5 @@
-import type { CoreRequest, CoreResponse } from "@intutable/core"
-import type { ExecuteCodeRequest, LoadTableRequest, RequestContext } from "./types"
-import type { ExecuteCodeResponse } from "./types"
-
-export async function loadTable(tableName: string, context: RequestContext): Promise<CoreResponse> {
-    const coreRequest: CoreRequest = {
-        channel: "data-dan",
-        method: "loadTable"
-    }
-
-    const request: LoadTableRequest = {
-        table: tableName
-    }
-
-    return context.send(coreRequest, request)
-}
+import type { CoreRequest } from "@intutable/core"
+import type { ExecuteCodeRequest, ExecuteCodeResponse, RequestContext } from "./types"
 
 export async function executeCodeSnippet(
     codeSnippet: string,
