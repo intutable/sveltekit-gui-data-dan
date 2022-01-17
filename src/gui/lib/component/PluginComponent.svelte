@@ -1,10 +1,15 @@
 <script lang="ts">
     import { getContext, onMount, SvelteComponent } from "svelte"
     import { executeCodeSnippet } from "../fetch"
-    import { CommonUiContext, RequestContext, RequestError, StoreContext } from "../types"
+    import {
+        CommonUiContext,
+        Output,
+        OutputType,
+        RequestContext,
+        RequestError,
+        StoreContext
+    } from "../types"
     import CodeEditor from "./editor/CodeEditor.svelte"
-    import OutputPanel from "./output/OutputPanel.svelte"
-    import { Output, OutputType } from "./output/types"
     import RunBar from "./runBar/RunBar.svelte"
 
     const requestContext = getContext<RequestContext>("request")
@@ -16,10 +21,12 @@
     let output: Output | undefined
     let loadingIndicator: SvelteComponent
     let showLoadingIndicator = false
+    let outputPanel: SvelteComponent
     let showOutput = false
 
     onMount(async () => {
         loadingIndicator = commonUiContext.getLoadingIndicator()
+        outputPanel = commonUiContext.getOutputPanel()
     })
 
     async function onRun(): Promise<void> {
@@ -48,7 +55,7 @@
     {#if showLoadingIndicator}
         <svelte:component this={loadingIndicator} title="Executing Code" />
     {:else if showOutput}
-        <OutputPanel {output} />
+        <svelte:component this={outputPanel} {output} />
     {:else}
         <CodeEditor bind:codeSnippet={codeSnippet} />
     {/if}

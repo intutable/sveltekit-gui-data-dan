@@ -11,6 +11,7 @@ export interface StoreContext {
 
 export interface CommonUiContext {
     getLoadingIndicator: () => SvelteComponent
+    getOutputPanel: () => SvelteComponent
 }
 
 export interface ExecuteCodeRequest {
@@ -26,3 +27,13 @@ export interface ExecuteCodeResponse extends CoreResponse {
 export interface RequestError extends Error {
     body: object
 }
+
+export class Output {
+    constructor(public type: OutputType, public message: string) {}
+}
+
+export enum OutputType {
+    Info = "Info",
+    Error = "Error"
+}
+
