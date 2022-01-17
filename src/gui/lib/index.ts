@@ -1,3 +1,4 @@
-import PluginComponent from "./PluginComponent.svelte"
+import PluginComponent from "./component/PluginComponent.svelte"
+import SortColumn from "./menuItem/SortColumn.svelte"
 
-export { PluginComponent }
+export { PluginComponent, SortColumn }

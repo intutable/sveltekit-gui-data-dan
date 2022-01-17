@@ -1,6 +1,6 @@
-import { Core, CoreRequest, EventSystem } from "@intutable/core"
+import { Core, EventSystem } from "@intutable/core"
 import * as path from "path"
-import { RegisterUiRequest } from '../../src/plugin/types'
+import { RegisterUiRequest } from "../../src/plugin/types"
 
 let events: EventSystem
 let requestObject: RegisterUiRequest | undefined
@@ -39,7 +39,21 @@ describe("plugin registration", () => {
                 {
                     name: "PluginComponent",
                     title: "DataDan",
-                    dimensions: { minHeight: 10, minWidth: 20 },
+                    dimensions: { minHeight: 10, minWidth: 20 }
+                }
+            ]
+        )
+    })
+
+    test("registers gui menu items", async () => {
+        events.listenForRequests("gui-es", "registerUi", requestHandler)
+        await createCore()
+
+        expect(requestObject?.menuItems).toEqual(
+            [
+                {
+                    name: "SortColumn",
+                    menu: "column"
                 }
             ]
         )
