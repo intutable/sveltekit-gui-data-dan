@@ -1,33 +1,19 @@
 <script lang="ts">
-    import { getContext, onMount, SvelteComponent } from "svelte"
+    import { LoadingIndicator, Output, OutputPanel, OutputType } from "@intutable/common-gui"
+    import { getContext } from "svelte"
     import { executeCodeSnippet } from "../fetch"
-    import {
-        CommonUiContext,
-        Output,
-        OutputType,
-        RequestContext,
-        RequestError,
-        StoreContext
-    } from "../types"
+    import { RequestContext, RequestError, StoreContext } from "../types"
     import CodeEditor from "./editor/CodeEditor.svelte"
     import RunBar from "./runBar/RunBar.svelte"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
-    const commonUiContext = getContext<CommonUiContext>("commonUi")
     const TABLE_NAME = "p1_newTableName"
 
     let codeSnippet: string
     let output: Output | undefined
-    let loadingIndicator: SvelteComponent
     let showLoadingIndicator = false
-    let outputPanel: SvelteComponent
     let showOutput = false
-
-    onMount(async () => {
-        loadingIndicator = commonUiContext.getLoadingIndicator()
-        outputPanel = commonUiContext.getOutputPanel()
-    })
 
     async function onRun(): Promise<void> {
         console.log(`Execute code snippet '${codeSnippet}'`)
@@ -53,16 +39,16 @@
 <div class="main-container">
     <RunBar bind:showOutput={showOutput} on:run={onRun} />
     {#if showLoadingIndicator}
-        <svelte:component this={loadingIndicator} title="Executing Code" />
+        <LoadingIndicator title="Executing Code" />
     {:else if showOutput}
-        <svelte:component this={outputPanel} {output} />
+        <OutputPanel {output} />
     {:else}
         <CodeEditor bind:codeSnippet={codeSnippet} />
     {/if}
 </div>
 
 <style lang="sass">
-  @use "../../style/theme"
+  @use "../../node_modules/@intutable/common-gui/dist/style/theme"
 
   .main-container
     @extend .theme-plain
