@@ -39,7 +39,7 @@ describe("plugin registration", () => {
                 {
                     name: "PluginComponent",
                     title: "DataDan",
-                    dimensions: { minHeight: 10, minWidth: 20 }
+                    dimensions: { minWidth: 20, minHeight: 12 }
                 }
             ]
         )
