@@ -5,6 +5,7 @@ export interface RequestContext {
 }
 
 export interface StoreContext {
+    refresh: (tableName: string) => CoreResponse
     updateRows: (tableName: string, rows: object[]) => CoreResponse
 }
 
@@ -12,15 +13,14 @@ export interface ExecuteCodeRequest {
     code: string
 }
 
-export interface ExecuteCodeResponse extends CoreResponse {
-    message: string
-    output: string
-    data: object[]
+export interface GetDataFrameRequest {
+    varName: string
 }
 
-export class RequestError extends Error {
-    constructor(public message: string, public body: object) {
-        super(message)
-        this.name = "RequestError"
-    }
+export interface ExecuteCodeResponse extends CoreResponse {
+    output: string
+}
+
+export interface GetDataFrameResponse extends CoreResponse {
+    data: object[]
 }
