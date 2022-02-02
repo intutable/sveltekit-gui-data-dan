@@ -7,7 +7,7 @@
     import OutputPanel from "../output/OutputPanel.svelte"
     import { Output, OutputType } from "../output/types"
     import CodeEditor from "./CodeEditor.svelte"
-    import RunBar from "./RunBar.svelte"
+    import ActionBar from "./ActionBar.svelte"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
@@ -50,7 +50,7 @@
 </script>
 
 <div class="main-container">
-    <RunBar bind:showOutput={showOutput} on:run={onRun} />
+    <ActionBar bind:showOutput={showOutput} on:run={onRun} />
     {#if showLoadingIndicator}
         <LoadingIndicator />
     {:else if showOutput}

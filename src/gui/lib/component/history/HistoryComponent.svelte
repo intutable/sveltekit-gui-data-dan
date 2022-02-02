@@ -4,7 +4,7 @@
     import { getHistory, loadHistory, rollback, saveHistory } from "./fetch"
     import { historyStore } from "./store"
     import { RequestContext, StoreContext } from "../../types"
-    import HistoryBar from "./HistoryBar.svelte"
+    import ActionBar from "./ActionBar.svelte"
     import type { History } from "./types"
 
     const requestContext = getContext<RequestContext>("request")
@@ -63,7 +63,7 @@
 </script>
 
 <div class="main-container">
-    <HistoryBar on:rollback={() => onRollback("", 2)} on:load={onLoad} on:save={onSave} />
+    <ActionBar on:rollback={() => onRollback("", 2)} on:load={onLoad} on:save={onSave} />
 
     {#if !history || history.snippets.length < 3}
         <div class="no-results">No history available.</div>
