@@ -1,7 +1,6 @@
 <script lang="ts">
     import { getContext } from "svelte"
     import { executeCodeSnippet } from "../fetch"
-    import { Output, OutputType } from "../component/output/types"
     import { RequestContext, RequestError, StoreContext } from "../types"
     import type { TableContext } from "./types"
 

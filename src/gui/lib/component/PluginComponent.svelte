@@ -1,12 +1,10 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte"
-    import CodeEditor from "./editor/CodeEditor.svelte"
-    import LoadingIndicator from "./loadingIndicator/LoadingIndicator.svelte"
-    import OutputPanel from "./output/OutputPanel.svelte"
-    import { Output, OutputType } from "./output/types"
+    import { LoadingIndicator, Output, OutputPanel, OutputType } from "@intutable/common-gui"
+    import { getContext } from "svelte"
     import { executeCodeSnippet } from "../fetch"
-    import RunBar from "./runBar/RunBar.svelte"
     import { RequestContext, RequestError, StoreContext } from "../types"
+    import CodeEditor from "./editor/CodeEditor.svelte"
+    import RunBar from "./runBar/RunBar.svelte"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
@@ -29,7 +27,7 @@
 
             await storeContext.updateRows(TABLE_NAME, response.data)
         } catch (error: RequestError) {
-            const  message = await error.body.error
+            const message = await error.body.error
             output = new Output(OutputType.Error, message)
         }
 
@@ -39,18 +37,18 @@
 </script>
 
 <div class="main-container">
-    <RunBar bind:showOutput={showOutput} on:run={onRun}/>
+    <RunBar bind:showOutput={showOutput} on:run={onRun} />
     {#if showLoadingIndicator}
-        <LoadingIndicator />
+        <LoadingIndicator title="Executing Code" />
     {:else if showOutput}
-        <OutputPanel {output}/>
+        <OutputPanel {output} />
     {:else}
-        <CodeEditor bind:codeSnippet={codeSnippet}/>
+        <CodeEditor bind:codeSnippet={codeSnippet} />
     {/if}
 </div>
 
 <style lang="sass">
-  @use "../../style/theme"
+  @use "../../node_modules/@intutable/common-gui/dist/style/theme"
 
   .main-container
     @extend .theme-plain

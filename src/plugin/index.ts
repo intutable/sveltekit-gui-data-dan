@@ -10,7 +10,7 @@ export async function init(plugins: PluginLoader) {
             {
                 name: "PluginComponent",
                 title: "DataDan" ,
-                dimensions: { minWidth: 20, minHeight: 10 }
+                dimensions: { minWidth: 20, minHeight: 12 }
             }
         ],
         menuItems: [
