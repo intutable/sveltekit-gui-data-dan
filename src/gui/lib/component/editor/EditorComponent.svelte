@@ -1,16 +1,16 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte"
-    import { executeCodeSnippet, getDataFrame, loadTable } from '../../fetch'
-    import { RequestContext, StoreContext } from '../../types'
-    import CodeEditor from './CodeEditor.svelte'
-    import LoadingIndicator from '../loadingIndicator/LoadingIndicator.svelte'
-    import OutputPanel from '../output/OutputPanel.svelte'
-    import { Output, OutputType } from '../output/types'
-    import RunBar from './RunBar.svelte'
+    import { executeCodeSnippet, refreshTableData } from "../../fetch"
+    import { RequestContext, StoreContext } from "../../types"
+    import { historyStore } from "../history/store"
+    import LoadingIndicator from "../loadingIndicator/LoadingIndicator.svelte"
+    import OutputPanel from "../output/OutputPanel.svelte"
+    import { Output, OutputType } from "../output/types"
+    import CodeEditor from "./CodeEditor.svelte"
+    import RunBar from "./RunBar.svelte"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
-    const TABLE_NAME = "p1_newTableName"
 
     let codeSnippet: string
     let output: Output | undefined
@@ -18,36 +18,45 @@
     let showOutput = false
 
     onMount(async () => {
-        await loadTable(TABLE_NAME, requestContext)
+        await refreshTableData(requestContext, storeContext)
+        historyStore.refresh()
     })
 
     async function onRun(): Promise<void> {
-        console.log(`Execute code snippet '${codeSnippet}'`)
+        console.log(`Execute code snippet "${codeSnippet}"`)
         showLoadingIndicator = true
 
         try {
             await executeCodeSnippet(codeSnippet, requestContext)
-            output = new Output(OutputType.Info, "Successfully Executed Code")
-
-            const response = await getDataFrame(TABLE_NAME, requestContext)
-            await storeContext.updateRows(TABLE_NAME, response.data)
-        } catch (error: unknown) {
-            output = new Output(OutputType.Error, error.body?.error ?? `${error}`)
+        } catch (error) {
+            onError(error)
+            return
         }
 
+        historyStore.refresh()
+        output = new Output(OutputType.Info, "Successfully executed code")
+        showLoadingIndicator = false
+        showOutput = true
+
+        await refreshTableData(requestContext, storeContext)
+    }
+
+    function onError(error: unknown): void {
+        console.error(error)
+        output = new Output(OutputType.Error, error.body?.error ?? `${error}`)
         showLoadingIndicator = false
         showOutput = true
     }
 </script>
 
 <div class="main-container">
-    <RunBar bind:showOutput={showOutput} on:run={onRun}/>
+    <RunBar bind:showOutput={showOutput} on:run={onRun} />
     {#if showLoadingIndicator}
         <LoadingIndicator />
     {:else if showOutput}
-        <OutputPanel {output}/>
+        <OutputPanel {output} />
     {:else}
-        <CodeEditor bind:codeSnippet={codeSnippet}/>
+        <CodeEditor bind:codeSnippet={codeSnippet} />
     {/if}
 </div>
 

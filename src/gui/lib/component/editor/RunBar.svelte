@@ -5,25 +5,19 @@
 
     $: outputButtonText = showOutput ? "Edit Code" : "Show Output"
 
-    const dispatch = createEventDispatcher()
-
-    function onToggleOutput(): void {
-        showOutput = !showOutput
-    }
-
-    async function onRun(): Promise<void> {
-        dispatch("run")
-    }
+    const dispatcher = createEventDispatcher()
 </script>
 
 <div class="button-container">
-    <button class="output-button" on:click={onToggleOutput}>{outputButtonText}</button>
-    <button class="run-button" on:click={onRun}>
+    <button class="output-button" on:click={() => showOutput = !showOutput}>{outputButtonText}</button>
+    <button class="run-button" on:click={() => dispatcher("run")}>
         <span class="play-icon">&#9658;</span>Run
     </button>
 </div>
 
 <style lang="sass">
+  @use "../../../style/util"
+
   .button-container
     display: flex
     justify-content: space-between
@@ -33,12 +27,10 @@
     margin-right: 0.5rem
 
   .run-button
-    background: #2244aa
-    color: white
+    @extend .highlighted-button
 
   .output-button
-    background: hsla(0, 0%, 0%, 0.05)
-    color: rgb(51, 51, 51)
+    @extend .plain-button
 
   button
     font:
