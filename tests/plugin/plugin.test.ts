@@ -37,7 +37,7 @@ describe("plugin registration", () => {
         expect(requestObject?.components).toEqual(
             [
                 {
-                    name: "PluginComponent",
+                    name: "EditorComponent",
                     title: "DataDan",
                     dimensions: { minHeight: 10, minWidth: 20 }
                 }

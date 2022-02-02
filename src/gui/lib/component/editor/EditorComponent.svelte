@@ -1,12 +1,12 @@
 <script lang="ts">
     import { getContext, onMount } from "svelte"
-    import { executeCodeSnippet, getDataFrame, loadTable } from '../fetch'
-    import { RequestContext, StoreContext } from '../types'
-    import CodeEditor from './editor/CodeEditor.svelte'
-    import LoadingIndicator from './loadingIndicator/LoadingIndicator.svelte'
-    import OutputPanel from './output/OutputPanel.svelte'
-    import { Output, OutputType } from './output/types'
-    import RunBar from './runBar/RunBar.svelte'
+    import { executeCodeSnippet, getDataFrame, loadTable } from '../../fetch'
+    import { RequestContext, StoreContext } from '../../types'
+    import CodeEditor from './CodeEditor.svelte'
+    import LoadingIndicator from '../loadingIndicator/LoadingIndicator.svelte'
+    import OutputPanel from '../output/OutputPanel.svelte'
+    import { Output, OutputType } from '../output/types'
+    import RunBar from './RunBar.svelte'
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
@@ -52,7 +52,7 @@
 </div>
 
 <style lang="sass">
-  @use "../../style/theme"
+  @use "../../../style/theme"
 
   .main-container
     @extend .theme-plain

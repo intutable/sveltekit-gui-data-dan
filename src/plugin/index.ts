@@ -8,7 +8,7 @@ export async function init(plugins: PluginLoader) {
         plugin: "data-dan-gui",
         components: [
             {
-                name: "PluginComponent",
+                name: "EditorComponent",
                 title: "DataDan" ,
                 dimensions: { minWidth: 20, minHeight: 10 }
             }
