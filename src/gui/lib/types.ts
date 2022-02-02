@@ -1,12 +1,13 @@
 import type { CoreRequest, CoreResponse } from "@intutable/core"
 
 export interface RequestContext {
-    send: (request: CoreRequest, body: object) => CoreResponse
+    send: (request: CoreRequest, body: object) => Promise<CoreResponse>
 }
 
 export interface StoreContext {
-    refresh: (tableName: string) => CoreResponse
-    updateRows: (tableName: string, rows: object[]) => CoreResponse
+    tableNames: () => string[]
+    refresh: (tableName: string) => void
+    updateRows: (tableName: string, rows: object[]) => void
 }
 
 export interface ExecuteCodeRequest {
@@ -17,10 +18,21 @@ export interface GetDataFrameRequest {
     varName: string
 }
 
+export interface HistoryRequest {
+    scriptName: string
+}
+
+export interface RollbackRequest {
+    newHead: number
+}
+
 export interface ExecuteCodeResponse extends CoreResponse {
     output: string
 }
 
-export interface GetDataFrameResponse extends CoreResponse {
-    data: object[]
+export interface GetHistoryResponse extends CoreResponse, History {}
+
+export interface History {
+    snippets: string[]
+    head: number
 }

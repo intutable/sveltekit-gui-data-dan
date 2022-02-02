@@ -9,7 +9,12 @@ export async function init(plugins: PluginLoader) {
         components: [
             {
                 name: "EditorComponent",
-                title: "DataDan" ,
+                title: "DataDan Editor" ,
+                dimensions: { minWidth: 20, minHeight: 10 }
+            },
+            {
+                name: "HistoryComponent",
+                title: "DataDan History" ,
                 dimensions: { minWidth: 20, minHeight: 10 }
             }
         ],

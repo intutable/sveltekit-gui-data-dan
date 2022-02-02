@@ -1,10 +1,13 @@
-import type { CoreRequest } from "@intutable/core"
+import type { CoreRequest, CoreResponse } from "@intutable/core"
 import type {
     ExecuteCodeRequest,
     ExecuteCodeResponse,
     GetDataFrameRequest,
-    GetDataFrameResponse,
-    RequestContext
+    GetHistoryResponse,
+    HistoryRequest,
+    RequestContext,
+    RollbackRequest,
+    StoreContext
 } from "./types"
 
 export async function loadTable(
@@ -18,18 +21,7 @@ export async function loadTable(
     )
 }
 
-export async function saveTable(
-    tableName: string,
-    context: RequestContext,
-    varName: string = tableName
-): Promise<ExecuteCodeResponse> {
-    return executeCodeSnippet(
-        `saveTable({ tableName: '${tableName}', varName: '${varName}' });`,
-        context
-    )
-}
-
-export async function executeCodeSnippet(
+export function executeCodeSnippet(
     codeSnippet: string,
     context: RequestContext
 ): Promise<ExecuteCodeResponse> {
@@ -42,13 +34,32 @@ export async function executeCodeSnippet(
         code: codeSnippet
     }
 
-    return context.send(coreRequest, request) as ExecuteCodeResponse
+    return context.send(coreRequest, request) as Promise<ExecuteCodeResponse>
 }
 
-export async function getDataFrame(
+export async function refreshTableData(
+    requestContext: RequestContext,
+    storeContext: StoreContext
+) {
+    for (const tableName of storeContext.tableNames()) {
+        try {
+            await getTableData(tableName, requestContext, storeContext)
+        } catch {
+            try {
+                await loadTable(tableName, requestContext)
+                await getTableData(tableName, requestContext, storeContext)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+}
+
+async function getTableData(
     tableName: string,
-    context: RequestContext
-): Promise<GetDataFrameResponse> {
+    requestContext: RequestContext,
+    storeContext: StoreContext
+) {
     const coreRequest: CoreRequest = {
         channel: "data-dan",
         method: "getDataFrame"
@@ -58,5 +69,54 @@ export async function getDataFrame(
         varName: tableName
     }
 
-    return context.send(coreRequest, request) as GetDataFrameResponse
+    const rows = await requestContext.send(coreRequest, request)
+    await storeContext.updateRows(tableName, rows)
+}
+
+export function getHistory(context: RequestContext): Promise<GetHistoryResponse> {
+    const coreRequest: CoreRequest = {
+        channel: "data-dan",
+        method: "getHistoryState"
+    }
+
+    return context.send(coreRequest, {}) as Promise<GetHistoryResponse>
+}
+
+export function rollback(
+    newHead: number,
+    context: RequestContext
+): Promise<CoreResponse> {
+    const coreRequest: CoreRequest = {
+        channel: "data-dan",
+        method: "rollback"
+    }
+
+    const request: RollbackRequest = { newHead }
+    return context.send(coreRequest, request) as Promise<CoreResponse>
+}
+
+export function loadHistory(
+    scriptName: string,
+    context: RequestContext
+): Promise<CoreResponse> {
+    const coreRequest: CoreRequest = {
+        channel: "data-dan",
+        method: "loadHistoryFromDB"
+    }
+
+    const request: HistoryRequest = { scriptName }
+    return context.send(coreRequest, request) as Promise<CoreResponse>
+}
+
+export function saveHistory(
+    scriptName: string,
+    context: RequestContext
+): Promise<CoreResponse> {
+    const coreRequest: CoreRequest = {
+        channel: "data-dan",
+        method: "saveHistoryToDB"
+    }
+
+    const request: HistoryRequest = { scriptName }
+    return context.send(coreRequest, request) as Promise<CoreResponse>
 }
