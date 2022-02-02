@@ -1,12 +1,9 @@
-import type { CoreRequest, CoreResponse } from "@intutable/core"
+import type { CoreRequest } from "@intutable/core"
 import type {
     ExecuteCodeRequest,
     ExecuteCodeResponse,
     GetDataFrameRequest,
-    GetHistoryResponse,
-    HistoryRequest,
     RequestContext,
-    RollbackRequest,
     StoreContext
 } from "./types"
 
@@ -71,52 +68,4 @@ async function getTableData(
 
     const rows = await requestContext.send(coreRequest, request)
     await storeContext.updateRows(tableName, rows)
-}
-
-export function getHistory(context: RequestContext): Promise<GetHistoryResponse> {
-    const coreRequest: CoreRequest = {
-        channel: "data-dan",
-        method: "getHistoryState"
-    }
-
-    return context.send(coreRequest, {}) as Promise<GetHistoryResponse>
-}
-
-export function rollback(
-    newHead: number,
-    context: RequestContext
-): Promise<CoreResponse> {
-    const coreRequest: CoreRequest = {
-        channel: "data-dan",
-        method: "rollback"
-    }
-
-    const request: RollbackRequest = { newHead }
-    return context.send(coreRequest, request) as Promise<CoreResponse>
-}
-
-export function loadHistory(
-    scriptName: string,
-    context: RequestContext
-): Promise<CoreResponse> {
-    const coreRequest: CoreRequest = {
-        channel: "data-dan",
-        method: "loadHistoryFromDB"
-    }
-
-    const request: HistoryRequest = { scriptName }
-    return context.send(coreRequest, request) as Promise<CoreResponse>
-}
-
-export function saveHistory(
-    scriptName: string,
-    context: RequestContext
-): Promise<CoreResponse> {
-    const coreRequest: CoreRequest = {
-        channel: "data-dan",
-        method: "saveHistoryToDB"
-    }
-
-    const request: HistoryRequest = { scriptName }
-    return context.send(coreRequest, request) as Promise<CoreResponse>
 }

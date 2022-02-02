@@ -1,9 +1,11 @@
 <script lang="ts">
     import { getContext, onDestroy } from "svelte"
-    import { getHistory, refreshTableData, loadHistory, rollback, saveHistory } from "../../fetch"
+    import { refreshTableData } from "../../fetch"
+    import { getHistory, loadHistory, rollback, saveHistory } from "./fetch"
     import { historyStore } from "./store"
-    import { History, RequestContext, StoreContext } from "../../types"
+    import { RequestContext, StoreContext } from "../../types"
     import HistoryBar from "./HistoryBar.svelte"
+    import type { History } from "./types"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
