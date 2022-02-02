@@ -5,8 +5,9 @@ export interface RequestContext {
 }
 
 export interface StoreContext {
-    refresh: (tableName: string) => CoreResponse
-    updateRows: (tableName: string, rows: object[]) => CoreResponse
+    tableNames: () => { tableNames: string[] }
+    refresh: (tableName: string) => void
+    updateRows: (tableName: string, rows: object[]) => void
 }
 
 export interface ExecuteCodeRequest {
@@ -17,10 +18,23 @@ export interface GetDataFrameRequest {
     varName: string
 }
 
+export interface HistoryRequest {
+    scriptName: string
+}
+
+export interface RollbackRequest {
+    newHead: number
+}
+
+export type GetDataFrameResponse = object[]
+
 export interface ExecuteCodeResponse extends CoreResponse {
     output: string
 }
 
-export interface GetDataFrameResponse extends CoreResponse {
-    data: object[]
+export interface GetHistoryResponse extends CoreResponse, History {}
+
+export interface History {
+    snippets: string[]
+    head: number
 }
