@@ -1,9 +1,9 @@
 import { Core, EventSystem } from "@intutable/core"
 import * as path from "path"
-import { RegisterUiRequest } from "../../src/plugin/types"
+import { RegisterComponentsRequest } from "../../src/plugin/types"
 
 let events: EventSystem
-let requestObject: RegisterUiRequest | undefined
+let requestObject: RegisterComponentsRequest | undefined
 let requestHandler: jest.Mock
 
 beforeAll(async () => {
@@ -16,22 +16,22 @@ beforeAll(async () => {
 })
 
 describe("plugin registration", () => {
-    test("sends registerUi request", async () => {
-        events.listenForRequests("gui-es", "registerUi", requestHandler)
+    test("sends registerComponents request", async () => {
+        events.listenForRequests("gui-es", "registerComponents", requestHandler)
         await createCore()
 
         expect(requestHandler).toHaveBeenCalled()
     })
 
     test("registers plugin name", async () => {
-        events.listenForRequests("gui-es", "registerUi", requestHandler)
+        events.listenForRequests("gui-es", "registerComponents", requestHandler)
         await createCore()
 
         expect(requestObject?.plugin).toBe("data-dan-gui")
     })
 
     test("registers gui components", async () => {
-        events.listenForRequests("gui-es", "registerUi", requestHandler)
+        events.listenForRequests("gui-es", "registerComponents", requestHandler)
         await createCore()
 
         expect(requestObject?.components).toEqual(
