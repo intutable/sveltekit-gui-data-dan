@@ -50,7 +50,7 @@
 <div class="main-container">
     <ActionBar bind:showOutput={showOutput} on:run={onRun} />
     {#if showLoadingIndicator}
-        <LoadingIndicator />
+        <LoadingIndicator title="Executing Code" />
     {:else if showOutput}
         <OutputPanel {output} />
     {:else}
