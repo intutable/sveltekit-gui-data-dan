@@ -49,20 +49,6 @@ describe("plugin registration", () => {
             ]
         )
     })
-
-    test("registers gui menu items", async () => {
-        events.listenForRequests("gui-es", "registerUi", requestHandler)
-        await createCore()
-
-        expect(requestObject?.menuItems).toEqual(
-            [
-                {
-                    name: "SortColumn",
-                    menu: "column"
-                }
-            ]
-        )
-    })
 })
 
 async function createCore() {

@@ -6,7 +6,7 @@ export interface RequestContext {
 
 export interface StoreContext {
     tableNames: () => string[]
-    updateRows: (tableName: string, rowsg: object[]) => void
+    updateRows: (tableName: string, rows: object[]) => void
 }
 
 export interface ExecuteCodeRequest {
