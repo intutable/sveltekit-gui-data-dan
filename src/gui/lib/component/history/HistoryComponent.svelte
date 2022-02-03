@@ -84,8 +84,8 @@
 </div>
 
 <style lang="sass">
-  @use "../../../style/theme"
-  @use "../../../style/util"
+  @use "../../../../../node_modules/@intutable/common-gui/dist/style/theme"
+  @use "../../../../../node_modules/@intutable/common-gui/dist/style/util"
 
   .main-container
     @extend .theme-plain

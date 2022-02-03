@@ -1,13 +1,11 @@
 <script lang="ts">
+    import { LoadingIndicator, Output, OutputPanel, OutputType } from "@intutable/common-gui"
     import { getContext, onMount } from "svelte"
     import { executeCodeSnippet, refreshTableData } from "../../fetch"
     import { RequestContext, StoreContext } from "../../types"
     import { historyStore } from "../history/store"
-    import LoadingIndicator from "../loadingIndicator/LoadingIndicator.svelte"
-    import OutputPanel from "../output/OutputPanel.svelte"
-    import { Output, OutputType } from "../output/types"
-    import CodeEditor from "./CodeEditor.svelte"
     import ActionBar from "./ActionBar.svelte"
+    import CodeEditor from "./CodeEditor.svelte"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
@@ -61,7 +59,7 @@
 </div>
 
 <style lang="sass">
-  @use "../../../style/theme"
+  @use "../../../../../node_modules/@intutable/common-gui/dist/style/theme"
 
   .main-container
     @extend .theme-plain
