@@ -1,9 +1,9 @@
 <script lang="ts">
     import { getContext, onDestroy } from "svelte"
-    import { refreshTableData } from "../../fetch"
+    import { refreshTableData } from "../fetch"
     import { getHistory, loadHistory, rollback, saveHistory } from "./fetch"
     import { historyStore } from "./store"
-    import { RequestContext, StoreContext } from "../../types"
+    import { RequestContext, StoreContext } from "../types"
     import ActionBar from "./ActionBar.svelte"
     import type { History } from "./types"
 
@@ -84,8 +84,8 @@
 </div>
 
 <style lang="sass">
-  @use "../../../../../node_modules/@intutable/common-gui/dist/style/theme"
-  @use "../../../../../node_modules/@intutable/common-gui/dist/style/util"
+  @use "../../../../node_modules/@intutable/common-gui/dist/style/theme"
+  @use "../../../../node_modules/@intutable/common-gui/dist/style/util"
 
   .main-container
     @extend .theme-plain

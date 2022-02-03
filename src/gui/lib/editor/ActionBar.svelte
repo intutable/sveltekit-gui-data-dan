@@ -16,7 +16,7 @@
 </div>
 
 <style lang="sass">
-  @use "../../../style/util"
+  @use "../../style/util"
 
   .button-container
     display: flex
