@@ -39,12 +39,12 @@ describe("plugin registration", () => {
                 {
                     name: "EditorComponent",
                     title: "DataDan Editor",
-                    dimensions: { minHeight: 10, minWidth: 20 }
+                    dimensions: { minWidth: 20, minHeight: 12 }
                 },
                 {
                     name: "HistoryComponent",
                     title: "DataDan History",
-                    dimensions: { minHeight: 10, minWidth: 20 }
+                    dimensions: { minWidth: 20, minHeight: 12 }
                 }
             ]
         )

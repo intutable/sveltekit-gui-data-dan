@@ -10,12 +10,12 @@ export async function init(plugins: PluginLoader) {
             {
                 name: "EditorComponent",
                 title: "DataDan Editor" ,
-                dimensions: { minWidth: 20, minHeight: 10 }
+                dimensions: { minWidth: 20, minHeight: 12 }
             },
             {
                 name: "HistoryComponent",
                 title: "DataDan History" ,
-                dimensions: { minWidth: 20, minHeight: 10 }
+                dimensions: { minWidth: 20, minHeight: 12 }
             }
         ],
         menuItems: [
