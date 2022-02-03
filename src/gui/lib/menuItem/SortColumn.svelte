@@ -1,7 +1,8 @@
 <script lang="ts">
     import { getContext } from "svelte"
-    import { executeCodeSnippet } from "../fetch"
-    import { RequestContext, RequestError, StoreContext } from "../types"
+    import { executeCodeSnippet, refreshTableData } from "../fetch"
+    import { historyStore } from "../component/history/store"
+    import { RequestContext, StoreContext } from "../types"
     import type { TableContext } from "./types"
 
     const requestContext = getContext<RequestContext>("request")
@@ -13,16 +14,17 @@
         console.log(`Sort column '${tableContext.columnName}' of table '${tableContext.tableName}'`)
 
         try {
-            const codeSnippet = `TABLE = TABLE.sort_values({ by: '${tableContext.columnName}' })`
-            const response = await executeCodeSnippet(codeSnippet, requestContext)
-            await storeContext.updateRows(`p1_${tableContext.tableName}`, response.data)
-        } catch (error: RequestError) {
-            console.log(`Sort column request failed with error: '${error.body.error}'`)
+            const codeSnippet = `${tableContext.tableName} = ${tableContext.tableName}.sort_values({ by: '${tableContext.columnName}' });`
+            await executeCodeSnippet(codeSnippet, requestContext)
+            await refreshTableData(requestContext, storeContext)
+            historyStore.refresh()
+        } catch (error: unknown) {
+            console.log(`Sort column request failed with error: '${error.body?.error ?? error}'`)
         }
     }
 </script>
 
-<div on:click={sortColumn}>Sort Column</div>
+<div on:click={sortColumn}>Sort column</div>
 
 <style lang="sass">
 </style>
