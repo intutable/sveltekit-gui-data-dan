@@ -21,7 +21,7 @@ export function loadHistory(
     }
 
     const request: HistoryRequest = { scriptName }
-    return context.send(coreRequest, request) as Promise<CoreResponse>
+    return context.send(coreRequest, request)
 }
 
 export function saveHistory(
@@ -34,7 +34,7 @@ export function saveHistory(
     }
 
     const request: HistoryRequest = { scriptName }
-    return context.send(coreRequest, request) as Promise<CoreResponse>
+    return context.send(coreRequest, request)
 }
 
 export function rollback(
@@ -47,5 +47,5 @@ export function rollback(
     }
 
     const request: RollbackRequest = { newHead }
-    return context.send(coreRequest, request) as Promise<CoreResponse>
+    return context.send(coreRequest, request)
 }

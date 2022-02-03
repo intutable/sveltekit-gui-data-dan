@@ -7,17 +7,6 @@ import type {
     StoreContext
 } from "./types"
 
-export async function loadTable(
-    tableName: string,
-    context: RequestContext,
-    varName: string = tableName
-): Promise<ExecuteCodeResponse> {
-    return executeCodeSnippet(
-        `loadTable({ tableName: '${tableName}', varName: '${varName}' });`,
-        context
-    )
-}
-
 export function executeCodeSnippet(
     codeSnippet: string,
     context: RequestContext
@@ -68,4 +57,15 @@ async function getTableData(
 
     const rows = await requestContext.send(coreRequest, request)
     await storeContext.updateRows(tableName, rows)
+}
+
+async function loadTable(
+    tableName: string,
+    context: RequestContext,
+    varName: string = tableName
+): Promise<ExecuteCodeResponse> {
+    return executeCodeSnippet(
+        `loadTable({ tableName: '${tableName}', varName: '${varName}' });`,
+        context
+    )
 }
