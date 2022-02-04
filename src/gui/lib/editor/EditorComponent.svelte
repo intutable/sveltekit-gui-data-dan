@@ -1,11 +1,12 @@
 <script lang="ts">
     import { LoadingIndicator, Output, OutputPanel, OutputType } from "@intutable/common-gui"
-    import { getContext, onMount } from "svelte"
-    import { executeCodeSnippet, refreshTableData } from "../fetch"
+    import { getContext } from "svelte"
+    import { refreshTableData } from "../fetch"
+    import { refreshHistory } from "../history/fetch"
     import { RequestContext, StoreContext } from "../types"
-    import { historyStore } from "../history/store"
     import ActionBar from "./ActionBar.svelte"
     import CodeEditor from "./CodeEditor.svelte"
+    import { executeCodeSnippet } from "./fetch"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
@@ -15,13 +16,7 @@
     let showLoadingIndicator = false
     let showOutput = false
 
-    onMount(async () => {
-        await refreshTableData(requestContext, storeContext)
-        historyStore.refresh()
-    })
-
     async function onRun(): Promise<void> {
-        console.log(`Execute code snippet "${codeSnippet}"`)
         showLoadingIndicator = true
 
         try {
@@ -31,11 +26,11 @@
             return
         }
 
-        historyStore.refresh()
         output = new Output(OutputType.Info, "Successfully executed code")
         showLoadingIndicator = false
         showOutput = true
 
+        await refreshHistory(requestContext)
         await refreshTableData(requestContext, storeContext)
     }
 

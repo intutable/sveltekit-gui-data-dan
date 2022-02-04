@@ -1,12 +1,4 @@
 import { writable } from "svelte/store"
+import type { History } from "./types"
 
-export const historyStore = creatHistoryStore()
-
-function creatHistoryStore() {
-    const { subscribe, update } = writable(0)
-
-    return {
-        subscribe,
-        refresh: () => update(value => value + 1)
-    }
-}
+export const historyStore = writable<History>()
