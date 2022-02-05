@@ -1,32 +1,11 @@
 import type { CoreRequest } from "@intutable/core"
-import type {
-    ExecuteCodeRequest,
-    ExecuteCodeResponse,
-    GetDataFrameRequest,
-    RequestContext,
-    StoreContext
-} from "./types"
+import { executeCodeSnippet } from "./editor/fetch"
+import type { ExecuteCodeResponse } from "./editor/types"
+import type { GetDataFrameRequest, RequestContext, StoreContext } from "./types"
 
-export function executeCodeSnippet(
-    codeSnippet: string,
-    context: RequestContext
-): Promise<ExecuteCodeResponse> {
-    const coreRequest: CoreRequest = {
-        channel: "data-dan",
-        method: "execute"
-    }
+export async function refreshTableData(requestContext: RequestContext, storeContext: StoreContext) {
+    console.log("Refresh table data")
 
-    const request: ExecuteCodeRequest = {
-        code: codeSnippet
-    }
-
-    return context.send(coreRequest, request) as Promise<ExecuteCodeResponse>
-}
-
-export async function refreshTableData(
-    requestContext: RequestContext,
-    storeContext: StoreContext
-) {
     for (const tableName of storeContext.tableNames()) {
         try {
             await getTableData(tableName, requestContext, storeContext)
@@ -64,6 +43,8 @@ async function loadTable(
     context: RequestContext,
     varName: string = tableName
 ): Promise<ExecuteCodeResponse> {
+    console.log(`Load table "${tableName}"`)
+
     return executeCodeSnippet(
         `loadTable({ tableName: '${tableName}', varName: '${varName}' });`,
         context

@@ -16,7 +16,7 @@
 </div>
 
 <style lang="sass">
-  @use "../../../style/util"
+  @use "../../../../node_modules/@intutable/common-gui/dist/style/theme"
 
   .button-container
     display: flex
@@ -27,6 +27,9 @@
 
   .run-button
     @extend .highlighted-button
+
+  .output-button, .run-button
+    margin: 0 0 0.5rem 0
 
   .play-icon
     font-size: 0.8rem

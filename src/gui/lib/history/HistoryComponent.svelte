@@ -1,59 +1,38 @@
 <script lang="ts">
-    import { getContext, onDestroy } from "svelte"
-    import { refreshTableData } from "../../fetch"
-    import { getHistory, loadHistory, rollback, saveHistory } from "./fetch"
-    import { historyStore } from "./store"
-    import { RequestContext, StoreContext } from "../../types"
+    import { getContext, onMount } from "svelte"
+    import { refreshTableData } from "../fetch"
+    import { RequestContext, StoreContext } from "../types"
     import ActionBar from "./ActionBar.svelte"
-    import type { History } from "./types"
+    import { loadHistory, refreshHistory, rollback, saveHistory } from "./fetch"
+    import { historyStore } from "./store"
 
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
 
-    let history: History | undefined
-
-    const unsubscribe = historyStore.subscribe(() => {
-        fetchHistory()
+    onMount(async () => {
+        await refreshHistory(requestContext)
     })
 
-    onDestroy(unsubscribe)
-
-    async function fetchHistory() {
-        console.log("Fetch history")
-
-        try {
-            history = await getHistory(requestContext)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     async function onRollback(snippet: string, head: number): Promise<void> {
-        console.log(`Rollback to head: '${head}'`)
-
         try {
             await rollback(head, requestContext)
+            await refreshHistory(requestContext)
             await refreshTableData(requestContext, storeContext)
-            await fetchHistory()
         } catch (error) {
-            console.error(error)
+            console.log(error)
         }
     }
 
     async function onLoad(): Promise<void> {
-        console.log("Load history")
-
         try {
             await loadHistory("script", requestContext)
-            await fetchHistory()
+            await refreshHistory(requestContext)
         } catch (error) {
             console.error(error)
         }
     }
 
     async function onSave(): Promise<void> {
-        console.log("Save history")
-
         try {
             await saveHistory("script", requestContext)
         } catch (error) {
@@ -65,15 +44,15 @@
 <div class="main-container">
     <ActionBar on:rollback={() => onRollback("", 2)} on:load={onLoad} on:save={onSave} />
 
-    {#if !history || history.snippets.length < 3}
+    {#if !$historyStore || $historyStore.snippets.length < 3}
         <div class="no-results">No history available.</div>
     {:else}
         <div class="header">Snippet</div>
         <div class="snippet-container">
-            {#each history.snippets.slice(2) as snippet, i}
+            {#each $historyStore.snippets.slice(2) as snippet, i}
                 <div
                     class="snippet"
-                    class:selected={history.head === i + 3}
+                    class:selected={$historyStore.head === i + 3}
                     on:click={onRollback(snippet, i + 3)}
                 >
                     {snippet}
@@ -84,8 +63,8 @@
 </div>
 
 <style lang="sass">
-  @use "../../../../../node_modules/@intutable/common-gui/dist/style/theme"
-  @use "../../../../../node_modules/@intutable/common-gui/dist/style/util"
+  @use "../../../../node_modules/@intutable/common-gui/dist/style/theme"
+  @use "../../../../node_modules/@intutable/common-gui/dist/style/util"
 
   .main-container
     @extend .theme-plain

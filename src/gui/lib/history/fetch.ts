@@ -1,20 +1,27 @@
 import type { CoreRequest, CoreResponse } from "@intutable/core"
 import type { RequestContext } from "lib/types"
-import type { GetHistoryResponse, HistoryRequest, RollbackRequest } from "./types"
+import { historyStore } from "./store"
+import type { HistoryRequest, RollbackRequest } from "./types"
 
-export function getHistory(context: RequestContext): Promise<GetHistoryResponse> {
+export async function refreshHistory(context: RequestContext): Promise<void> {
+    console.log("Refresh history")
+
     const coreRequest: CoreRequest = {
         channel: "data-dan",
         method: "getHistoryState"
     }
 
-    return context.send(coreRequest, {}) as Promise<GetHistoryResponse>
+    try {
+        const history = await context.send(coreRequest, {})
+        historyStore.set(history)
+    } catch (error) {
+        console.error(error)
+    }
 }
 
-export function loadHistory(
-    scriptName: string,
-    context: RequestContext
-): Promise<CoreResponse> {
+export function loadHistory(scriptName: string, context: RequestContext): Promise<CoreResponse> {
+    console.log("Load history")
+
     const coreRequest: CoreRequest = {
         channel: "data-dan",
         method: "loadHistoryFromDB"
@@ -24,10 +31,9 @@ export function loadHistory(
     return context.send(coreRequest, request)
 }
 
-export function saveHistory(
-    scriptName: string,
-    context: RequestContext
-): Promise<CoreResponse> {
+export function saveHistory(scriptName: string, context: RequestContext): Promise<CoreResponse> {
+    console.log("Save history")
+
     const coreRequest: CoreRequest = {
         channel: "data-dan",
         method: "saveHistoryToDB"
@@ -37,10 +43,9 @@ export function saveHistory(
     return context.send(coreRequest, request)
 }
 
-export function rollback(
-    newHead: number,
-    context: RequestContext
-): Promise<CoreResponse> {
+export function rollback(newHead: number, context: RequestContext): Promise<CoreResponse> {
+    console.log("Rollback history")
+
     const coreRequest: CoreRequest = {
         channel: "data-dan",
         method: "rollback"

@@ -6,17 +6,9 @@ export interface RequestContext {
 
 export interface StoreContext {
     tableNames: () => string[]
-    updateRows: (tableName: string, rowsg: object[]) => void
-}
-
-export interface ExecuteCodeRequest {
-    code: string
+    updateRows: (tableName: string, rows: object[]) => void
 }
 
 export interface GetDataFrameRequest {
     varName: string
-}
-
-export interface ExecuteCodeResponse extends CoreResponse {
-    output: string
 }

@@ -1,10 +1,10 @@
 import { PluginLoader } from "@intutable/core"
-import { RegisterUiRequest } from "./types"
+import { RegisterComponentsRequest } from "./types"
 
 export async function init(plugins: PluginLoader) {
-    const request: RegisterUiRequest = {
+    const request: RegisterComponentsRequest = {
         channel: "gui-es",
-        method: "registerUi",
+        method: "registerComponents",
         plugin: "data-dan-gui",
         components: [
             {
@@ -16,12 +16,6 @@ export async function init(plugins: PluginLoader) {
                 name: "HistoryComponent",
                 title: "DataDan History" ,
                 dimensions: { minWidth: 20, minHeight: 12 }
-            }
-        ],
-        menuItems: [
-            {
-                name: "SortColumn",
-                menu: "column"
             }
         ]
     }
