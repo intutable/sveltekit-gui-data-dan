@@ -18,6 +18,9 @@
     justify-content: flex-end
     gap: 0.5rem
 
+  .load-button, .rollback-button, .save-button
+    margin: 0 0 0.5rem 0
+
   .rollback-button
     margin-right: auto
 
@@ -26,7 +29,4 @@
 
   .save-button
     @extend .highlighted-button
-
-  .load-button, .rollback-button, .save-button
-    margin: 0 0 0.5rem 0
 </style>
