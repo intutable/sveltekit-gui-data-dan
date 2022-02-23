@@ -12,3 +12,7 @@ export interface StoreContext {
 export interface GetDataFrameRequest {
     varName: string
 }
+
+export interface DataFrameNamesResponse extends CoreResponse {
+    dataFrameNames: string[]
+}
