@@ -70,7 +70,8 @@
     @extend .theme-plain
     display: flex
     flex-direction: column
-    flex: 1
+    flex: 1 1 auto
+    height: 20rem
     overflow-x: hidden
 
   .no-results
