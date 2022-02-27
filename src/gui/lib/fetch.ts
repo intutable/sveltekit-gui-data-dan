@@ -1,6 +1,5 @@
 import type { CoreRequest } from "@intutable/core"
 import { executeCodeSnippet } from "./editor/fetch"
-import { ExecuteCodeRequest } from "./editor/types"
 import type { ExecuteCodeResponse } from "./editor/types"
 import type {
     DataFrameNamesResponse,
@@ -12,11 +11,12 @@ import type {
 export async function refreshTableData(requestContext: RequestContext, storeContext: StoreContext) {
     console.log("Refresh table data")
 
-    const { dataFrameNames } = await getDataFrameNames(requestContext)
-    const tableNames = storeContext.tableNames()
-
     try {
-        for (const tableName of tableNames) {
+        let { dataFrameNames } = await getDataFrameNames(requestContext)
+        const tableNames = storeContext.tableNames().map(name => `p1_${name}`)
+        const union = Array.from(new Set([...dataFrameNames, ...tableNames]))
+
+        for (const tableName of union) {
             if (!dataFrameNames.includes(tableName)) {
                 await loadTable(tableName, requestContext)
             }
@@ -55,8 +55,8 @@ async function getTableData(
         varName: tableName
     }
 
-    const rows = await requestContext.send(coreRequest, request)
-    await storeContext.updateRows(tableName, rows)
+    const tableData = await requestContext.send(coreRequest, request)
+    await storeContext.updateTable(tableData)
 }
 
 async function loadTable(

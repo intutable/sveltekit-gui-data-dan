@@ -43,7 +43,6 @@
 
 <div class="main-container">
     <ActionBar on:rollback={() => onRollback("", 2)} on:load={onLoad} on:save={onSave} />
-
     {#if !$historyStore || $historyStore.snippets.length < 3}
         <div class="no-results">No history available.</div>
     {:else}

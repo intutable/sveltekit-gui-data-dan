@@ -6,7 +6,7 @@ export interface RequestContext {
 
 export interface StoreContext {
     tableNames: () => string[]
-    updateRows: (tableName: string, rows: object[]) => void
+    updateTable: (tableData: object) => void
 }
 
 export interface GetDataFrameRequest {
