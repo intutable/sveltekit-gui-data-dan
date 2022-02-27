@@ -16,3 +16,9 @@ export interface GetDataFrameRequest {
 export interface DataFrameNamesResponse extends CoreResponse {
     dataFrameNames: string[]
 }
+
+export interface TableListener {
+    onRefresh: (requestContext: RequestContext, storeContext: StoreContext) => void | Promise<void>,
+    onLoad: (tableName: string, requestContext: RequestContext) => void | Promise<void>,
+    onDelete: (tableName: string, requestContext: RequestContext) => void | Promise<void>,
+}
