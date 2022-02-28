@@ -42,18 +42,17 @@
 </script>
 
 <div class="main-container">
-    <ActionBar on:rollback={() => onRollback("", 2)} on:load={onLoad} on:save={onSave} />
-
-    {#if !$historyStore || $historyStore.snippets.length < 3}
+    <ActionBar on:rollback={() => onRollback("", 0)} on:load={onLoad} on:save={onSave} />
+    {#if !$historyStore || $historyStore.snippets.length === 0}
         <div class="no-results">No history available.</div>
     {:else}
         <div class="header">Snippet</div>
         <div class="snippet-container">
-            {#each $historyStore.snippets.slice(2) as snippet, i}
+            {#each $historyStore.snippets as snippet, i}
                 <div
                     class="snippet"
-                    class:selected={$historyStore.head === i + 3}
-                    on:click={onRollback(snippet, i + 3)}
+                    class:selected={$historyStore.head === i + 1}
+                    on:click={onRollback(snippet, i + 1)}
                 >
                     {snippet}
                 </div>
@@ -70,7 +69,8 @@
     @extend .theme-plain
     display: flex
     flex-direction: column
-    flex: 1
+    flex: 1 1 auto
+    height: 20rem
     overflow-x: hidden
 
   .no-results
