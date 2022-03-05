@@ -1,4 +1,5 @@
 import EditorComponent from "./editor/EditorComponent.svelte"
+import { executeCodeSnippet } from "./editor/fetch"
 import { loadTable, refreshTableData, removeTable } from "./fetch"
 import { refreshHistory } from "./history/fetch"
 import HistoryComponent from "./history/HistoryComponent.svelte"
@@ -20,6 +21,16 @@ const tableListener: TableListener = {
     onDelete: async (tableName, requestContext) => {
         await removeTable(`p1_${tableName}`, requestContext)
         await refreshHistory(requestContext)
+    },
+    onUpdate: async (
+        tableName,
+        rowIndex,
+        columnIndex,
+        newValue,
+        requestContext
+    ) => {
+        const code = `p1_${tableName}.values[${rowIndex}][${columnIndex + 1}] = "${newValue}";`
+        await executeCodeSnippet(code, requestContext)
     }
 }
 
