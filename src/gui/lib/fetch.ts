@@ -53,6 +53,19 @@ export async function removeTable(
     }
 }
 
+export async function commitChanges(requestContext: RequestContext): Promise<void> {
+    try {
+        let { dataFrameNames } = await getDataFrameNames(requestContext)
+
+        for (const tableName of dataFrameNames) {
+            const snippet = `await saveTable(${tableName}, "${tableName}", undefined)`
+            await executeCodeSnippet(snippet, requestContext)
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 function getDataFrameNames(context: RequestContext): Promise<DataFrameNamesResponse> {
     console.log("Get dataframe names")
 
