@@ -18,14 +18,14 @@ export interface DataFrameNamesResponse extends CoreResponse {
 }
 
 export interface TableListener {
-    onRefresh: (requestContext: RequestContext, storeContext: StoreContext) => void | Promise<void>,
-    onLoad: (tableName: string, requestContext: RequestContext) => void | Promise<void>,
-    onDelete: (tableName: string, requestContext: RequestContext) => void | Promise<void>,
+    onRefresh: () => void | Promise<void>,
+    onLoad: (tableName: string) => void | Promise<void>,
+    onDelete: (tableName: string) => void | Promise<void>,
     onUpdate: (
         tableName: string,
         rowIndex: number,
         columnIndex: number,
-        newValue: string,
-        requestContext: RequestContext
+        newValue: string
     ) => void | Promise<void>,
+    onCommit: () => void | Promise<void>
 }
