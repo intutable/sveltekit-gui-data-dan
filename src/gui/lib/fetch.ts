@@ -7,12 +7,30 @@ import type {
     StoreContext
 } from "./types"
 
-export async function refreshTableData(requestContext: RequestContext, storeContext: StoreContext) {
+export async function initializeProjectData(
+    projectId: number,
+    userId: number,
+    requestContext: RequestContext
+): Promise<void> {
+    console.log("Initialize project data")
+
+    try {
+        await executeCodeSnippet(`setProjectId(${projectId})`, requestContext)
+        await executeCodeSnippet(`setUserId(${userId})`, requestContext)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function refreshTableData(
+    requestContext: RequestContext,
+    storeContext: StoreContext
+): Promise<void> {
     console.log("Refresh table data")
 
     try {
         let { dataFrameNames } = await getDataFrameNames(requestContext)
-        const tableNames = storeContext.tableNames().map(name => `p1_${name}`)
+        const tableNames = storeContext.tableNames()
         const union = Array.from(new Set([...dataFrameNames, ...tableNames]))
 
         for (const tableName of union) {
