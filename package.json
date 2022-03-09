@@ -13,7 +13,7 @@
     "author": "Parallel and Distributed Systems Group Universität Heidelberg",
     "license": "Apache-2.0",
     "dependencies": {
-        "@intutable/common-gui": "^0.4.0",
+        "@intutable/common-gui": "^0.4.1",
         "@intutable/core": "^0.1.6",
         "@sveltejs/kit": "next",
         "monaco-editor": "^0.32.1",
