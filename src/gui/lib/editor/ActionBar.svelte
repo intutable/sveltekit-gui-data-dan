@@ -29,7 +29,7 @@
     @extend .highlighted-button
 
   .output-button, .run-button
-    margin: 0 0 0.5rem 0
+    margin: 0
 
   .play-icon
     font-size: 0.8rem

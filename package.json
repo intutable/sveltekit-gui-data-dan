@@ -1,6 +1,6 @@
 {
     "name": "@intutable/data-dan-gui",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "description": "",
     "main": "dist/index.js",
     "scripts": {
@@ -13,7 +13,7 @@
     "author": "Parallel and Distributed Systems Group Universität Heidelberg",
     "license": "Apache-2.0",
     "dependencies": {
-        "@intutable/common-gui": "^0.3.0",
+        "@intutable/common-gui": "^0.4.0",
         "@intutable/core": "^0.1.6",
         "@sveltejs/kit": "next",
         "monaco-editor": "^0.32.1",
