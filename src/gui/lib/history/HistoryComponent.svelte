@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getContext, onMount } from "svelte"
+    import { afterUpdate, beforeUpdate, getContext, onMount } from "svelte"
     import { refreshTableData } from "../fetch"
     import { RequestContext, StoreContext } from "../types"
     import ActionBar from "./ActionBar.svelte"
@@ -9,8 +9,24 @@
     const requestContext = getContext<RequestContext>("request")
     const storeContext = getContext<StoreContext>("store")
 
+    let container: HTMLDivElement | undefined
+    let autoscroll = false
+
     onMount(async () => {
         await refreshHistory(requestContext)
+        container.scrollTo(0, container.scrollHeight)
+    })
+
+    beforeUpdate(() => {
+        if (container) {
+            autoscroll = container.offsetHeight + container.scrollTop > container.scrollHeight - 20
+        }
+    })
+
+    afterUpdate(() => {
+        if (autoscroll) {
+            container.scrollTo(0, container.scrollHeight)
+        }
     })
 
     async function onRollback(snippet: string, head: number): Promise<void> {
@@ -47,7 +63,7 @@
         <div class="no-results">No history available.</div>
     {:else}
         <div class="header">Snippet</div>
-        <div class="snippet-container">
+        <div class="snippet-container" bind:this={container}>
             {#each $historyStore.snippets as snippet, i}
                 <div
                     class="snippet"

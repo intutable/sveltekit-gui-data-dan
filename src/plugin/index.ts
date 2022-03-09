@@ -1,7 +1,7 @@
 import { PluginLoader } from "@intutable/core"
 import { RegisterComponentsRequest } from "./types"
 
-export async function init(plugins: PluginLoader) {
+export async function init(plugins: PluginLoader): Promise<void> {
     const request: RegisterComponentsRequest = {
         channel: "gui-es",
         method: "registerComponents",
