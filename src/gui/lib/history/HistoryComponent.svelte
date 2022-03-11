@@ -12,24 +12,37 @@
     let container: HTMLDivElement | undefined
     let autoscroll = false
 
+    /**
+     * On mount, refresh the current history and scroll to the bottom.
+     */
     onMount(async () => {
         await refreshHistory(requestContext)
         container.scrollTo(0, container.scrollHeight)
     })
 
+    /**
+     * Check if the autoscroll should be enabled (hence the user scrolled to the bottom).
+     */
     beforeUpdate(() => {
         if (container) {
             autoscroll = container.offsetHeight + container.scrollTop > container.scrollHeight - 20
         }
     })
 
+    /**
+     * If autoscroll is enabled, scroll to the botton of the container, after an update happened.
+     */
     afterUpdate(() => {
         if (autoscroll) {
             container.scrollTo(0, container.scrollHeight)
         }
     })
 
-    async function onRollback(snippet: string, head: number): Promise<void> {
+    /**
+     * Rolls back all the changes until the index of `head`.
+     * @param head Index to roll back the changes to
+     */
+    async function onRollback(head: number): Promise<void> {
         try {
             await rollback(head, requestContext)
             await refreshHistory(requestContext)
@@ -39,6 +52,9 @@
         }
     }
 
+    /**
+     * Loads the history script named "script" from the database and refreshes the history.
+     */
     async function onLoad(): Promise<void> {
         try {
             await loadHistory("script", requestContext)
@@ -48,6 +64,9 @@
         }
     }
 
+    /**
+     * Saves the current history in the database under the script name "script".
+     */
     async function onSave(): Promise<void> {
         try {
             await saveHistory("script", requestContext)
@@ -58,7 +77,7 @@
 </script>
 
 <div class="main-container">
-    <ActionBar on:rollback={() => onRollback("", 0)} on:load={onLoad} on:save={onSave} />
+    <ActionBar on:load={onLoad} on:rollback={() => onRollback(0)} on:save={onSave} />
     {#if !$historyStore || $historyStore.snippets.length === 0}
         <div class="no-results">No history available.</div>
     {:else}
@@ -68,7 +87,7 @@
                 <div
                     class="snippet"
                     class:selected={$historyStore.head === i + 1}
-                    on:click={onRollback(snippet, i + 1)}
+                    on:click={onRollback(i + 1)}
                 >
                     {snippet}
                 </div>

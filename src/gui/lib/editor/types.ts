@@ -6,10 +6,10 @@ export interface ExecuteCodeRequest {
 
 export interface ExecuteCodeResponse extends CoreResponse {
     consoleArgEntries: {
-        log: string[][],
-        debug: string[][],
-        info: string[][],
-        warn: string[][],
-        error: string[][],
+        log: string[][]
+        debug: string[][]
+        info: string[][]
+        warn: string[][]
+        error: string[][]
     }
 }
