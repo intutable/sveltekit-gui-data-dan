@@ -16,11 +16,11 @@ export function executeCodeSnippet(
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "execute"
+        method: "execute",
     }
 
     const request: ExecuteCodeRequest = {
-        code: codeSnippet
+        code: codeSnippet,
     }
 
     return requestContext.send(coreRequest, request) as Promise<ExecuteCodeResponse>

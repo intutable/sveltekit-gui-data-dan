@@ -32,7 +32,7 @@
                 horizontalScrollbarSize: 5,
                 verticalScrollbarSize: 5
             },
-            scrollBeyondLastLine: false,
+            scrollBeyondLastLine: false
         })
 
         editor.getModel().onDidChangeContent(() => {
@@ -43,7 +43,7 @@
     })
 </script>
 
-<div class="monaco-editor" bind:this={divElement}></div>
+<div bind:this={divElement} class="monaco-editor"></div>
 
 <style lang="sass">
   .monaco-editor

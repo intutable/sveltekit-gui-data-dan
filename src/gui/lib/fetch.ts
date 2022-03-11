@@ -4,7 +4,7 @@ import type {
     DataFrameNamesResponse,
     GetDataFrameRequest,
     RequestContext,
-    StoreContext
+    StoreContext,
 } from "./types"
 
 /**
@@ -65,10 +65,7 @@ export async function refreshTableData(
  * @param tableName name of the table to be loaded
  * @param requestContext Svelte Context for making request calls
  */
-export async function loadTable(
-    tableName: string,
-    requestContext: RequestContext
-): Promise<void> {
+export async function loadTable(tableName: string, requestContext: RequestContext): Promise<void> {
     console.log(`Load table "${tableName}"`)
 
     try {
@@ -126,7 +123,7 @@ function getDataFrameNames(requestContext: RequestContext): Promise<DataFrameNam
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "getDataFrameNames"
+        method: "getDataFrameNames",
     }
 
     return requestContext.send(coreRequest, {}) as Promise<DataFrameNamesResponse>
@@ -147,11 +144,11 @@ async function getTableData(
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "getDataFrame"
+        method: "getDataFrame",
     }
 
     const request: GetDataFrameRequest = {
-        varName: tableName
+        varName: tableName,
     }
 
     const tableData = await requestContext.send(coreRequest, request)

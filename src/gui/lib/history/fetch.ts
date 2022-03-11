@@ -12,7 +12,7 @@ export async function refreshHistory(requestContext: RequestContext): Promise<vo
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "getHistoryState"
+        method: "getHistoryState",
     }
 
     try {
@@ -36,7 +36,7 @@ export function loadHistory(
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "loadHistoryFromDB"
+        method: "loadHistoryFromDB",
     }
 
     const request: HistoryRequest = { scriptName }
@@ -56,7 +56,7 @@ export function saveHistory(
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "saveHistoryToDB"
+        method: "saveHistoryToDB",
     }
 
     const request: HistoryRequest = { scriptName }
@@ -74,7 +74,7 @@ export function rollback(newHead: number, requestContext: RequestContext): Promi
 
     const coreRequest: CoreRequest = {
         channel: "data-dan",
-        method: "rollback"
+        method: "rollback",
     }
 
     const request: RollbackRequest = { newHead }

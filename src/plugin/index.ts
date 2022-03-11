@@ -13,15 +13,15 @@ export async function init(plugins: PluginLoader): Promise<void> {
         components: [
             {
                 name: "EditorComponent",
-                title: "DataDan Editor" ,
-                dimensions: { minWidth: 20, minHeight: 12 }
+                title: "DataDan Editor",
+                dimensions: { minWidth: 20, minHeight: 12 },
             },
             {
                 name: "HistoryComponent",
-                title: "DataDan History" ,
-                dimensions: { minWidth: 20, minHeight: 12 }
-            }
-        ]
+                title: "DataDan History",
+                dimensions: { minWidth: 20, minHeight: 12 },
+            },
+        ],
     }
 
     await plugins.request(request)

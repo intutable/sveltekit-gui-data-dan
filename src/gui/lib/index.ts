@@ -1,6 +1,12 @@
 import EditorComponent from "./editor/EditorComponent.svelte"
 import { executeCodeSnippet } from "./editor/fetch"
-import { commitChanges, loadTable, refreshTableData, removeTable, initializeProjectData } from "./fetch"
+import {
+    commitChanges,
+    initializeProjectData,
+    loadTable,
+    refreshTableData,
+    removeTable,
+} from "./fetch"
 import { refreshHistory } from "./history/fetch"
 import HistoryComponent from "./history/HistoryComponent.svelte"
 import type { RequestContext, StoreContext, TableListener } from "./types"
@@ -40,7 +46,7 @@ const tableListener: TableListener = {
      * Register callback when table needs to be loaded from the database by data-dan.
      * @param tableName name of the table to be loaded
      */
-    onLoad: async (tableName) => {
+    onLoad: async tableName => {
         await loadTable(tableName, requestContext)
         await refreshHistory(requestContext)
     },
@@ -48,7 +54,7 @@ const tableListener: TableListener = {
      * Register callback when a table in the database got deleted.
      * @param tableName name of the deleted table
      */
-    onDelete: async (tableName) => {
+    onDelete: async tableName => {
         await removeTable(tableName, requestContext)
         await refreshHistory(requestContext)
     },
@@ -71,7 +77,7 @@ const tableListener: TableListener = {
         await commitChanges(requestContext)
         await refreshTableData(requestContext, storeContext)
         await refreshHistory(requestContext)
-    }
+    },
 }
 
 export { EditorComponent, HistoryComponent, onInit, tableListener }

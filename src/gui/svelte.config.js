@@ -6,7 +6,7 @@ const config = {
     kit: {
         files: {
             template: "./component.html",
-            lib: "./lib"
+            lib: "./lib",
         },
         package: {
             dir: "../../dist/gui",

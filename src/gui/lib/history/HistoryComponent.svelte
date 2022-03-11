@@ -77,7 +77,7 @@
 </script>
 
 <div class="main-container">
-    <ActionBar on:rollback={() => onRollback(0)} on:load={onLoad} on:save={onSave} />
+    <ActionBar on:load={onLoad} on:rollback={() => onRollback(0)} on:save={onSave} />
     {#if !$historyStore || $historyStore.snippets.length === 0}
         <div class="no-results">No history available.</div>
     {:else}
