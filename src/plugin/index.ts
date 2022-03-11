@@ -1,6 +1,10 @@
 import { PluginLoader } from "@intutable/core"
 import { RegisterComponentsRequest } from "./types"
 
+/**
+ * Registers the data-dan-gui UI components in the gui-es plugin in Core.
+ * @param {PluginLoader} plugins Plugin loader object from Core
+ */
 export async function init(plugins: PluginLoader): Promise<void> {
     const request: RegisterComponentsRequest = {
         channel: "gui-es",

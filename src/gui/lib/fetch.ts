@@ -7,6 +7,13 @@ import type {
     StoreContext
 } from "./types"
 
+/**
+ * Initialized the project data in the data-dan plugin.
+ * Explicitly it sets the projectId and userId in the data-dan plugin.
+ * @param projectId id of the current project
+ * @param userId id of the current user
+ * @param requestContext Svelte Context for making request calls
+ */
 export async function initializeProjectData(
     projectId: number,
     userId: number,
@@ -22,6 +29,12 @@ export async function initializeProjectData(
     }
 }
 
+/**
+ * Refreshes the table data of the in-memory tables.
+ * If a table is not yet in-memory, it will be loaded from the database.
+ * @param requestContext Svelte Context for making request calls
+ * @param storeContext Svelte Context for accessing the tableStore
+ */
 export async function refreshTableData(
     requestContext: RequestContext,
     storeContext: StoreContext
@@ -31,10 +44,12 @@ export async function refreshTableData(
     try {
         let { dataFrameNames } = await getDataFrameNames(requestContext)
         const tableNames = storeContext.tableNames()
+        // Union of the tables that are in the database and the tables that are in-memory
         const union = Array.from(new Set([...dataFrameNames, ...tableNames]))
 
         for (const tableName of union) {
             if (!dataFrameNames.includes(tableName)) {
+                // Load tables that are not yet in-memory
                 await loadTable(tableName, requestContext)
             }
 
@@ -45,32 +60,49 @@ export async function refreshTableData(
     }
 }
 
+/**
+ * Loads a table from the database and stores it in a dataframe with the name of `tableName`.
+ * @param tableName name of the table to be loaded
+ * @param requestContext Svelte Context for making request calls
+ */
 export async function loadTable(
     tableName: string,
-    context: RequestContext
+    requestContext: RequestContext
 ): Promise<void> {
     console.log(`Load table "${tableName}"`)
 
     try {
-        await executeCodeSnippet(`var ${tableName} = await loadTable("${tableName}");`, context)
+        await executeCodeSnippet(
+            `var ${tableName} = await loadTable("${tableName}");`,
+            requestContext
+        )
     } catch (error) {
         console.log(error)
     }
 }
 
+/**
+ * Removes the dataframe of a table in the data-dan plugin.
+ * @param tableName name of the table to be removed
+ * @param requestContext Svelte Context for making request calls
+ */
 export async function removeTable(
     tableName: string,
-    context: RequestContext
+    requestContext: RequestContext
 ): Promise<void> {
     console.log(`Remove table "${tableName}"`)
 
     try {
-        await executeCodeSnippet(`${tableName} = undefined;`, context)
+        await executeCodeSnippet(`${tableName} = undefined;`, requestContext)
     } catch (error) {
         console.log(error)
     }
 }
 
+/**
+ * Persists the changes made on the in-memory changes in the database.
+ * @param requestContext Svelte Context for making request calls
+ */
 export async function commitChanges(requestContext: RequestContext): Promise<void> {
     try {
         let { dataFrameNames } = await getDataFrameNames(requestContext)
@@ -84,7 +116,12 @@ export async function commitChanges(requestContext: RequestContext): Promise<voi
     }
 }
 
-function getDataFrameNames(context: RequestContext): Promise<DataFrameNamesResponse> {
+/**
+ * Returns the dataframe names that are currently loaded in the data-dan plugin.
+ * @param requestContext Svelte Context for making request calls
+ * @returns an object containing the names of the in-memory dataframes
+ */
+function getDataFrameNames(requestContext: RequestContext): Promise<DataFrameNamesResponse> {
     console.log("Get dataframe names")
 
     const coreRequest: CoreRequest = {
@@ -92,9 +129,15 @@ function getDataFrameNames(context: RequestContext): Promise<DataFrameNamesRespo
         method: "getDataFrameNames"
     }
 
-    return context.send(coreRequest, {}) as Promise<DataFrameNamesResponse>
+    return requestContext.send(coreRequest, {}) as Promise<DataFrameNamesResponse>
 }
 
+/**
+ * Returns the table data of a dataframe in the data-dan plugin.
+ * @param tableName name of the table to get the table data
+ * @param requestContext Svelte Context for making request calls
+ * @param storeContext Svelte Context for accessing the tableStore
+ */
 async function getTableData(
     tableName: string,
     requestContext: RequestContext,

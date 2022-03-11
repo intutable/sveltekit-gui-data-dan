@@ -9,6 +9,9 @@
     let divElement: HTMLDivElement | undefined = undefined
     let editor: Monaco.editor.IStandaloneCodeEditor
 
+    /**
+     * On mount, set up the monaco editor.
+     */
     onMount(async () => {
         // @ts-ignore
         self.MonacoEnvironment = {
