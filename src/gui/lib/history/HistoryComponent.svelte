@@ -30,7 +30,7 @@
     })
 
     /**
-     * If autoscroll is enabled, scroll to the botton of the container, after an update happened.
+     * If autoscroll is enabled, scroll to the bottom of the container, after an update happened.
      */
     afterUpdate(() => {
         if (autoscroll) {
