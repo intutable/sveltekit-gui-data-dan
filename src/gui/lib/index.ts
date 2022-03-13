@@ -32,6 +32,7 @@ async function onInit(
     storeContext = _storeContext
     await initializeProjectData(projectId, userId, requestContext)
     await refreshTableData(requestContext, storeContext)
+    await refreshHistory(requestContext)
 }
 
 const tableListener: TableListener = {
