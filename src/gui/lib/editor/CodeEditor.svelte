@@ -9,6 +9,9 @@
     let divElement: HTMLDivElement | undefined = undefined
     let editor: Monaco.editor.IStandaloneCodeEditor
 
+    /**
+     * On mount, set up the monaco editor.
+     */
     onMount(async () => {
         // @ts-ignore
         self.MonacoEnvironment = {
@@ -29,7 +32,7 @@
                 horizontalScrollbarSize: 5,
                 verticalScrollbarSize: 5
             },
-            scrollBeyondLastLine: false,
+            scrollBeyondLastLine: false
         })
 
         editor.getModel().onDidChangeContent(() => {
@@ -40,7 +43,7 @@
     })
 </script>
 
-<div class="monaco-editor" bind:this={divElement}></div>
+<div bind:this={divElement} class="monaco-editor"></div>
 
 <style lang="sass">
   .monaco-editor

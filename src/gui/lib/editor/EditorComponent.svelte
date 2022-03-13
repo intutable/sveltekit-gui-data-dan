@@ -17,6 +17,10 @@
     let showLoadingIndicator = false
     let showOutput = false
 
+    /**
+     * Executes the current code snippet and shows the output in the output panel.
+     * Also refreshes the current history and the in-memory table data.
+     */
     async function onRun(): Promise<void> {
         showLoadingIndicator = true
 
@@ -35,6 +39,10 @@
         await refreshTableData(requestContext, storeContext)
     }
 
+    /**
+     * Displays an error in the output panel.
+     * @param error error to be displayed
+     */
     function onError(error: unknown): void {
         console.error(error)
         outputs = [new Output(OutputType.Error, error.body?.error ?? `${error}`)]
@@ -42,6 +50,11 @@
         showOutput = true
     }
 
+    /**
+     * Extracts the console entries from the execute code snippet request and transform it into
+     * an array of outputs to be displayed in the output panel.
+     * @param response response of the execute code snippet request
+     */
     function getConsoleOutput(response: ExecuteCodeResponse): Output[] {
         const consoleEntries = response.consoleArgEntries
         const error = consoleEntries.error.map(log => new Output(OutputType.Error, log.join(" - ")))

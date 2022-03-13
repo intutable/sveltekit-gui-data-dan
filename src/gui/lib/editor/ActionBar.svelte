@@ -9,7 +9,10 @@
 </script>
 
 <div class="button-container">
-    <button class="output-button" on:click={() => showOutput = !showOutput}>{outputButtonText}</button>
+    <button
+        class="output-button"
+        on:click={() => showOutput = !showOutput}>{outputButtonText}
+    </button>
     <button class="run-button" on:click={() => dispatcher("run")}>
         <span class="play-icon">&#9658;</span>Run
     </button>
