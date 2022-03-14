@@ -87,7 +87,7 @@
                 <div
                     class="snippet"
                     class:selected={$historyStore.head === i + 1}
-                    on:click={onRollback(i + 1)}
+                    on:click={() => onRollback(i + 1)}
                 >
                     {snippet}
                 </div>
